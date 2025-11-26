@@ -8,6 +8,7 @@ import productsRoutes from './src/routes/productRoutes/productsRoutes.js'
 import serviceRoutes from './src/routes/services/serviceRoutes.js'
 import blogRoutes from './src/routes/blogsRoutes/blogRoutes.js'
 import { auth } from "express-openid-connect";
+import cors from 'cors'
 
 
 dotenv.config();
@@ -18,6 +19,26 @@ const port = process.env.PORT || 4000
 app.use(express.json());
 
 await connectDb(); // make sure DB connected
+
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://www.urbantrends.dev",
+    "https://urbantrends.dev",
+]
+
+app.use (
+    cors ({
+        origin: (origin, callback) =>{
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error ("Not allowed by cors"));
+            }
+        },
+        credentials: true,
+    })
+
+);
 
 const config = {
   authRequired: false,
