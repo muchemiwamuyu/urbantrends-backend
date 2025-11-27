@@ -8,6 +8,7 @@ import productsRoutes from './src/routes/productRoutes/productsRoutes.js'
 import serviceRoutes from './src/routes/services/serviceRoutes.js'
 import blogRoutes from './src/routes/blogsRoutes/blogRoutes.js'
 import developerRoutes from './src/routes/developers/projectRoutes.js'
+import orderRoutes from './src/routes/orders/contactRoutes.js'
 import { auth } from "express-openid-connect";
 import cors from 'cors'
 
@@ -62,6 +63,7 @@ app.use('/products', productsRoutes);
 app.use('/services', serviceRoutes);
 app.use('/blogs', blogRoutes);
 app.use('/developers', developerRoutes);
+app.use('/orders', orderRoutes);
 
 app.listen(port, () => {
   console.log(`HTTP server running on http://localhost:${port}`);
