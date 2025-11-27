@@ -37,7 +37,7 @@ export const createProject = (req, res) => {
               resolve(result);
             }
           );
-          stream.createReadStream(req.file.buffer).pipe(stream);
+          streamifier.createReadStream(req.file.buffer).pipe(stream);
         });
 
         imageUrl = uploadResult.secure_url;
