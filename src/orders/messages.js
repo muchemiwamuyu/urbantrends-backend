@@ -8,13 +8,13 @@ export const submitContactForm = async (req, res) => {
     // Save to MongoDB
     const contact = await contactMessage.create({ name, email, message });
 
-    // Send email notification
+    // Send email notification via SendGrid
     await transporter.sendMail({
-      from: `"UrbanTrends Website" <${process.env.SMTP_USER}>`,
-      to: process.env.RECEIVER_EMAIL,
+      from: `"UrbanTrends Website" <no-reply@urbantrends.com>`, // sender
+      to: process.env.RECEIVER_EMAIL,                          // receiver
       subject: `New Contact Form Submission from ${name}`,
       html: `
-        <h3>New Order form Submission</h3>
+        <h3>New Contact Form Submission</h3>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Message:</strong> ${message}</p>
@@ -23,11 +23,10 @@ export const submitContactForm = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: "Your message has been submitted successfully!",
-
+      message: "Thank you! We have received your message and will contact you as soon as possible.",
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error sending contact form email:", error);
     res.status(500).json({
       success: false,
       error: "Something went wrong. Please try again later.",
