@@ -1,6 +1,6 @@
 import DeveloperProject from "../../models/developers/projects.js";
 import multer from "multer";
-import cloudinary from "../config/cloudinary.js";
+import cloudinary from "../../config/cloudinary.js";
 import streamifier from "streamifier";
 
 
