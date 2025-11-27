@@ -7,6 +7,7 @@ import projectRoutes from './src/routes/projectRoutes/projectRoutes.js'
 import productsRoutes from './src/routes/productRoutes/productsRoutes.js'
 import serviceRoutes from './src/routes/services/serviceRoutes.js'
 import blogRoutes from './src/routes/blogsRoutes/blogRoutes.js'
+import developerRoutes from './src/routes/developers/projectRoutes.js'
 import { auth } from "express-openid-connect";
 import cors from 'cors'
 
@@ -24,6 +25,7 @@ const allowedOrigins = [
     "http://localhost:5173",
     "https://www.urbantrends.dev",
     "https://urbantrends.dev",
+    "https://developers.urbantrends.dev"
 ]
 
 app.use (
@@ -59,6 +61,7 @@ app.use('/projects', projectRoutes);
 app.use('/products', productsRoutes);
 app.use('/services', serviceRoutes);
 app.use('/blogs', blogRoutes);
+app.use('/developers', developerRoutes);
 
 app.listen(port, () => {
   console.log(`HTTP server running on http://localhost:${port}`);
