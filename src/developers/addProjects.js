@@ -76,7 +76,7 @@ export const getProjects = async (req, res) => {
 };
 
 // Get single project
-export const getProject = async (req, res) => {
+export const getProjectById = async (req, res) => {
   try {
     const project = await DeveloperProject.findById(req.params.id);
     if (!project) {
