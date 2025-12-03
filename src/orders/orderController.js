@@ -1,6 +1,9 @@
 import Service from "../../models/services/services.js";
 import Order from "../../models/orders/orders.js";
 import mongoose from "mongoose";
+
+
+
 export const createOrder = async (req, res) => {
   try {
     const { serviceId, tierIndex, customer, notes } = req.body;
@@ -13,16 +16,16 @@ export const createOrder = async (req, res) => {
     const service = await Service.findById(serviceId);
     if (!service) return res.status(404).json({ error: "Service not found" });
 
-    // Validate tier index
-    const tier = service.tiers[tierIndex];
+    // Validate tier index safely
+    const tier = service.tiers?.[tierIndex];
     if (!tier) return res.status(400).json({ error: "Invalid tier selected" });
 
-    // Build order
+    // Build order safely
     const order = new Order({
       service: {
-        id: mongoose.Types.ObjectId(service.id),
-        name: service.title, // service name/title
-        image: service.icon || "",
+        id: service._id, // Use _id directly
+        name: service.title || service.name || "Unnamed Service",
+        image: service.icon || service.image || "",
       },
       tier,
       customer,
@@ -33,10 +36,11 @@ export const createOrder = async (req, res) => {
 
     res.status(201).json({ message: "Order created", order });
   } catch (err) {
-    console.error(err.message, err.stack);
+    console.error(err.message, err.stack); // detailed logging
     res.status(500).json({ error: "Server error" });
   }
 };
+
 
 // Get all orders
 export const getOrders = async (req, res) => {
