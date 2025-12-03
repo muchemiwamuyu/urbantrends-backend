@@ -80,6 +80,19 @@ const developerProjectSchema = new mongoose.Schema(
         message: "Invalid Image URL",
       },
     },
+
+    // NEW EMAIL FIELD
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
+      validate: {
+        validator: (v) =>
+          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v),
+        message: "Invalid email address",
+      },
+    },
   },
   { timestamps: true }
 );

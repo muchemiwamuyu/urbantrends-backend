@@ -23,6 +23,7 @@ export const createProject = (req, res) => {
         tags,
         githubRepo,
         liveUrl,
+        email, // added email
       } = req.body;
 
       let imageUrl = "";
@@ -52,6 +53,7 @@ export const createProject = (req, res) => {
         githubRepo,
         liveUrl,
         imageUrl,
+        email, // save email to DB
       });
 
       res.status(201).json({ success: true, data: project });
@@ -65,15 +67,20 @@ export const createProject = (req, res) => {
 // Get all projects
 export const getProjects = async (req, res) => {
   try {
-    const projects = await DeveloperProject.find().sort({ createdAt: -1 });
+    const projects = await DeveloperProject.find()
+      .sort({ createdAt: -1 })
+      .select("title shortDescription longDescription category tags githubRepo liveUrl imageUrl email createdAt updatedAt");
+
     res.status(200).json({
       success: true,
       data: projects,
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
 
 // Get single project
 export const getProjectById = async (req, res) => {
