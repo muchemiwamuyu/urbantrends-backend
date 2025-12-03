@@ -1,4 +1,3 @@
-// models/Order.js
 import mongoose from "mongoose";
 
 const TierSchema = new mongoose.Schema({
@@ -12,24 +11,33 @@ const TierSchema = new mongoose.Schema({
 const OrderSchema = new mongoose.Schema(
   {
     service: {
-      id: { type: mongoose.Schema.Types.ObjectId, ref: "Service", required: true },
-      name: { type: String, required: true }, // <-- this is the service name/title
+      id: { type: mongoose.Schema.Types.ObjectId, ref: "Service" },
+      name: { type: String },
       image: { type: String },
     },
-    tier: { type: TierSchema, required: true },
+    tier: TierSchema,
+    product: {
+      id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+      name: { type: String },
+      description: { type: String },
+      price: { type: Number },
+      image: { type: String },
+    },
     customer: {
       name: { type: String },
       email: { type: String },
       phone: { type: String },
     },
+    quantity: { type: Number, default: 1 }, // for products
     status: {
       type: String,
       enum: ["pending", "in-progress", "under-revision", "completed", "cancelled"],
       default: "pending",
     },
-    notes: { type: String }, // optional instructions
+    notes: { type: String },
   },
   { timestamps: true }
 );
 
 export default mongoose.models.Order || mongoose.model("Order", OrderSchema);
+
