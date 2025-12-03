@@ -1,6 +1,6 @@
 import Service from "../../models/services/services.js";
 import Order from "../../models/orders/orders.js";
-
+import mongoose from "mongoose";
 export const createOrder = async (req, res) => {
   try {
     const { serviceId, tierIndex, customer, notes } = req.body;
@@ -20,7 +20,7 @@ export const createOrder = async (req, res) => {
     // Build order
     const order = new Order({
       service: {
-        id: service._id,
+        id: mongoose.Types.ObjectId(service.id),
         name: service.title, // service name/title
         image: service.icon || "",
       },
