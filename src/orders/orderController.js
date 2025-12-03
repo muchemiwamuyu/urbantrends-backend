@@ -33,7 +33,7 @@ export const createOrder = async (req, res) => {
 
     res.status(201).json({ message: "Order created", order });
   } catch (err) {
-    console.error(err);
+    console.error(err.message, err.stack);
     res.status(500).json({ error: "Server error" });
   }
 };
