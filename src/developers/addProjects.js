@@ -131,3 +131,25 @@ export const deleteProject = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
+// Get projects by email
+export const getProjectsByEmail = async (req, res) => {
+  try {
+    const { email } = req.params; // or req.query.email if you prefer query param
+    if (!email) {
+      return res.status(400).json({ success: false, error: "Email is required" });
+    }
+
+    const projects = await DeveloperProject.find({ email })
+      .sort({ createdAt: -1 })
+      .select("title shortDescription longDescription category tags githubRepo liveUrl imageUrl email createdAt updatedAt");
+
+    res.status(200).json({
+      success: true,
+      data: projects,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
