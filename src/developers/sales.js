@@ -78,3 +78,34 @@ export const updateProjectSaleStatus = async (req, res) => {
     res.status(500).json({ success: false, error: 'Server error' });
   }
 };
+
+
+// get sale by email
+export const getProjectSalesByEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        error: "Email is required",
+      });
+    }
+
+    const sales = await ProjectSale.find({ developerEmail: email }).sort({
+      createdAt: -1,
+    });
+
+    return res.status(200).json({
+      success: true,
+      count: sales.length,
+      data: sales,
+    });
+  } catch (error) {
+    console.error("Error fetching sales by email:", error);
+    return res.status(500).json({
+      success: false,
+      error: "Server error while fetching sales",
+    });
+  }
+};
