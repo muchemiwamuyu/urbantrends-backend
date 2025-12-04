@@ -65,3 +65,21 @@ export const getOrderById = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+// Get orders by customer email
+export const getOrdersByEmail = async (req, res) => {
+  try {
+    const { email } = req.params; // get email from URL params
+    if (!email) return res.status(400).json({ error: "Email is required" });
+
+    // Find orders where customer.email matches
+    const orders = await Order.find({ "customer.email": email }).sort({ createdAt: -1 });
+
+    if (!orders.length) return res.status(404).json({ error: "No orders found for this email" });
+
+    res.json({ orders });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
