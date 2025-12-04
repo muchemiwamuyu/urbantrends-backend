@@ -10,6 +10,7 @@ import blogRoutes from './src/routes/blogsRoutes/blogRoutes.js'
 import developerRoutes from './src/routes/developers/projectRoutes.js'
 import orderRoutes from './src/routes/orders/contactRoutes.js'
 import ordersRoutes from './src/routes/orders/orderRoutes.js'
+import projectsSales from './src/routes/developers/projectSales.js'
 import { auth } from "express-openid-connect";
 import cors from 'cors'
 
@@ -66,6 +67,7 @@ app.use('/blogs', blogRoutes);
 app.use('/developers', developerRoutes);
 app.use('/orders', orderRoutes);
 app.use('/api', ordersRoutes);
+app.use('/sale', projectsSales);
 
 app.listen(port, () => {
   console.log(`HTTP server running on http://localhost:${port}`);
