@@ -92,7 +92,7 @@ export const getProjectSalesByEmail = async (req, res) => {
       });
     }
 
-    const sales = await ProjectSale.find({ developerEmail: email }).sort({
+    const sales = await ProjectsSale.find({ developerEmail: email }).sort({
       createdAt: -1,
     });
 
