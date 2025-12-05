@@ -29,7 +29,8 @@ const allowedOrigins = [
     "http://localhost:5173",
     "https://www.urbantrends.dev",
     "https://urbantrends.dev",
-    "https://developers.urbantrends.dev"
+    "https://developers.urbantrends.dev",
+    "https://urbantrends-developers.vercel.app"
 ]
 
 app.use (
